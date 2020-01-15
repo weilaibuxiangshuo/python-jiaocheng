@@ -1,0 +1,51 @@
+"""
+装饰器：是一个闭包，把一个函数当参数，返回一个替代版的函数，本质上就是一个返回函数的函数
+"""
+
+# 简单的装饰器：
+def func1():
+    print("good is nice")
+
+def outer(func):
+    def inner():
+        print("*******")
+        func()
+    return inner
+f=outer(func1)
+f()
+# 结果：
+# *******
+# good is nice
+
+# 复杂一点装饰器
+def outer2(func):
+    def inner(age):
+        if age<0:
+            age=0
+        func(age)
+    return inner
+
+#使用@符号将装饰器应用到函数
+#@python2.4支持使用@符号
+
+@outer2   #相当于say=outer2(say)
+def say(age):
+    print("good is %d years old"%age)
+
+say(-10)
+
+# 通用型装饰器
+def outer3(func):
+    def inner(*args,**kwargs):
+        #添加修改的功能
+        print("######")
+        func(*args,**kwargs)
+    return inner
+
+@outer3
+def say2(name,age):
+    print("my name is %s, I am %d years old"%(name,age))
+
+
+say2("bb",17)
+
