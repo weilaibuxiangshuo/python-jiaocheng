@@ -49,3 +49,20 @@ def say2(name,age):
 
 say2("bb",17)
 
+
+# 装饰器带参数
+def out_outter3(*new):
+    def outer3(func):
+        def inner(*args, **kwargs):
+            # 添加修改的功能
+            print("######",new)
+            func(*args, **kwargs)
+        return inner
+    return outer3
+
+@out_outter3('cc')
+def say2(name,age):
+    print("my name is %s, I am %d years old"%(name,age))
+
+
+say2("bb",17)
