@@ -1,0 +1,25 @@
+path="d:/suck2.txt"
+# f=open(path,"w")
+
+#写文件
+# 1.将信息写入缓冲区
+# f.write("good is nice5")
+# 2.刷新缓冲区
+#直接把内部缓冲区的数据立刻写入文件，而不是被动的等自动刷新缓冲区写入(即close()关闭会自动刷新缓冲区)
+# f.flush()  #直接立即写入文件
+
+# f.close()  #文件关闭后写入
+
+# 编码与解码
+
+with open(path,"wb") as f3:
+    str="good is nice"
+    f3.write(str.encode("utf-8"))
+
+with open(path,"rb") as f5:
+    data=f5.read()
+    print(data)
+    print(type(data))
+    newData=data.decode("utf-8")
+    print(newData)
+    print(type(newData))
