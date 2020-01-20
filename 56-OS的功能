@@ -1,0 +1,127 @@
+import os
+"""
+56 os:包含了普遍操作系统的功能
+
+获取操作系统类型
+print(os.name)
+结果：nt    表示windows
+结果：posix    表示Linux ,unix或者Mac.OS.X
+
+打印操作系统详细信息,windows不支持,linux,maxos下可以
+print(os.uname())
+
+获取操作系统中的环境变量
+print(os.environ)
+
+获取某个环境变量
+print(os.environ.get("PATH"))
+
+获取当前目录就是  .(点)
+print(os.curdir)
+
+获取当前工作目录，即当前python脚本所在的目录
+print(os.getcwd())
+结果：D:\djangodjiango\newvue\logs
+
+以列表的形式返回指定目录下的所有文件
+print(os.listdir(r'D:\djangodjiango\newvue'))
+结果：['.idea', 'db.sqlite3', 'Include', 'Lib']
+
+在当前目录下创建目录，不能创建文件
+os.mkdir("sunck")
+也可以指定路径创建,指定绝对路径就可以
+os.mkdir(path)
+
+删除目录，不能删除文件
+os.rmdir("sunck")
+
+切换绝对路径，也可以用相对路径切换至此目录下，不过前提是已经在e:\\盘目录下，可行驶os.chdir(“1software”)
+os.chdir("e:\1softwar")
+
+获取文件或者文件夹的属性
+print(os.stat("ceshi.py"))
+
+重命名
+os.rename("suck","suck1")
+
+删除普通文件
+os.remove("file1.txt")
+
+运行shell命令
+os.system("notepad")
+os.system("shutdown /s /t 8000")
+os.system("shutdown /a ")
+os.system("taskkill /f /im notepad.exe")
+
+查看当前的绝对路径
+print(os.path.abspath("."))
+结果：D:\djangodjiango\newvue\logs
+查看当前的绝对路径包含文件名
+print(os.path.abspath(__file__))
+结果：D:\djangodjiango\newvue\logs\python-教程.py
+查看当前文件的目录
+print(os.path.dirname(os.path.abspath(__file__)))
+结果：D:\djangodjiango\newvue\logs
+查看当前文件的绝对路径
+print(os.path.abspath("./ceshi.py"))
+结果：D:\djangodjiango\newvue\logs\ceshi.py
+
+拼接路径
+注意参数2，开始不要有斜杠，否则默认从头开开始，会报错
+p1=r"c:\system32\book"
+p2=r"sunck"
+print(os.path.join(p1,p2))
+
+为什么不用+号，因为join比较通用，不同系统不会弄错
+p3="/root/suck/home"
+p4="kaige"
+print(os.path.join(p3,p4))
+
+拆分路径(注意跟字符串中split不一样，这个是os.path中拆分最后一个)
+p5=r"c:\system32\book"
+print(os.path.split(p5))
+结果：('c:\\system32', 'book')
+
+p6=r"c:\system32\book\kaige.txt"
+print(os.path.split(p6))
+结果：('c:\\system32\\book', 'kaige.txt')
+
+p7=r"c:\system32/book/kaige2.txt"
+print(os.path.split(p7))
+结果：('c:\\system32/book', 'kaige2.txt')
+
+获取扩展名,如没有扩展名为空
+p8=r"c:\system32\book\kaige.txt"
+print(os.path.splitext(p8))
+结果：('c:\\system32\\book\\kaige', '.txt')
+
+判断是否是目录
+p9=r"c:\system32\book\kaige.txt"
+print(os.path.isdir(p9))
+结果：False
+
+判断文件是否存在
+print(os.path.isfile(r"D:\djangodjiango\newvue\logs\ceshi.py"))
+结果：True
+
+判断目录是否存
+print(os.path.exists(r"D:\djangodjiango\newvue\logs"))
+结果：True
+
+获取文件大小
+print(os.path.getsize(r"D:\djangodjiango\newvue\logs\ceshi.py"))
+结果：102
+
+获取指定文件目录，与os.getcwd()不同在于，它是直接获取当前脚本所在目录，不能指定文件
+p10=r"D:\djangodjiango\newvue\logs\ceshi.py"
+print(os.getcwd())
+print(os.path.dirname(p10))
+
+获取文件名与os.path.split(p10)[1]这样拆分获取是一样的
+print(os.path.split(p10)[1])
+print(os.path.basename(p10))
+结果：
+ceshi.py
+ceshi.py
+
+"""
