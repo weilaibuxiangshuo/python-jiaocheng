@@ -1,0 +1,82 @@
+import os
+"""
+递归
+方式：
+1.写出临界条件
+2.找这一次和上一次的关系
+3.假设当前函数已经使用，调用自身计算上一次的结果，再求出本次的结果
+"""
+
+#用递归求输一个数的范围和
+def sum(n):
+    if n==1:
+        return 1
+    else:
+        return n+sum(n-1)
+
+sum1=sum(5)
+print(sum1)
+
+path=r"D:\djangodjiango\newvue\logs"
+
+#递归方式
+def func(path,baseSpace=""):
+    filesList=os.listdir(path)
+    # print(filesList)
+    baseSpace += "  "
+    for fileName in filesList:
+        oneFile=os.path.join(path,fileName)
+        if os.path.isdir(oneFile):
+            print(baseSpace+"目录：",fileName)
+            func(oneFile,baseSpace)
+        else:
+            print(baseSpace+"普通文件：",fileName)
+
+# func(path)
+
+
+# 深度栈遍历方法(先进后出)
+def func2(path):
+    #创建一个列表的栈
+    stack=[]
+    #向栈添加
+    stack.append(path)
+    while len(stack) != 0:
+        #出栈
+        res=stack.pop()
+        allListName=os.listdir(res)
+        for oneName in allListName:
+            #拼接为绝对路径
+            oneNamePath=os.path.join(path,oneName)
+            #如果是目录就进栈并打印，如果不是就打印
+            if os.path.isdir(oneNamePath):
+                print("目录：",oneName)
+                stack.append(oneNamePath)
+            else:
+                print("普通文件：",oneName)
+func2(path)
+
+print("----------------")
+
+# 广度队列遍历方法(先进先出）
+import collections
+def fun3(path):
+    queue=collections.deque()
+    #进队
+    queue.append(path)
+    # print(queue)
+    while len(queue) !=0:
+        #出队数据
+        dirPath=queue.popleft()
+        #找出所有的文件含目录
+        onlyPath=os.listdir(dirPath)
+        for temp in onlyPath:
+            #拼接为绝对路径
+            tempPath=os.path.join(dirPath,temp)
+            #判断是否为目录，是目录就进队，不是就打印
+            if os.path.isdir(tempPath):
+                print("目录：",temp)
+                queue.append(temp)
+            else:
+                print("普通文件：",temp)
+fun3(path)
