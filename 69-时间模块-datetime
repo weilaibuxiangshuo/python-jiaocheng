@@ -1,0 +1,54 @@
+import datetime
+
+"""
+datetime比time高级，基于time进行封装，提供的各种使用函数，datetime模块的接口更直观，更容易调用
+如果要与time转换，通过字符串转换，因为两个都有字符串
+模块中的类：
+datetime  同时有时间跟日期
+timedelta  主要用于计算时间差
+tzinfo     时区相关
+time       只关注时间
+date       只关日期
+"""
+
+# 获取当前日期跟时间
+d1=datetime.datetime.now()
+print(d1)
+print(type(d1))
+# 结果：
+# 2020-01-22 18:21:13.223999
+# <class 'datetime.datetime'>
+
+# 获取指定的时间
+d2=datetime.datetime(2020,10,1,10,28,30)
+print(d2)
+# 结果：2020-10-01 10:28:30
+
+# 将时间转为字符串
+d3=d1.strftime("%Y-%m-%d %H:%M:%S")
+print(d3)
+print(type(d3))
+# 结果：
+# 2020-01-22 18:21:13
+# <class 'str'>
+
+# 将格式化字符串转datetime对象
+# 注意：转换格式要与字符串一致
+d4=datetime.datetime.strptime(d3,"%Y-%m-%d %H:%M:%S")
+print(d4)
+# 结果：2020-01-22 18:20:36
+
+# datetime.datetime对象可以相加或者相减
+d5=datetime.datetime(2019,10,1,10,25,30)
+d6=datetime.datetime.now()
+d7=d6-d5
+print(d7)
+print(type(d7))
+# 结果：
+# 113 days, 7:57:38.002999
+# <class 'datetime.timedelta'>
+
+#获取多少天
+print(d7.days)
+#间隔天数除外的秒数
+print(d7.seconds)
