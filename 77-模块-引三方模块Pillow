@@ -1,0 +1,21 @@
+"""
+安装第三方模块，需要知道模块的名字
+pillow 非常强大的图像处理的工具库
+
+pip install Pillow
+升级pip
+pip install --upgrade pip
+"""
+from PIL import Image
+
+#打开图片
+im = Image.open("111.jpg")
+
+#查看图片信息
+print(im.format,im.size,im.mode)
+
+# 设置图片大小,参数必须是元组
+im.thumbnail((150,100))
+
+# 保存图片
+im.save('temp.jpg','JPEG')
