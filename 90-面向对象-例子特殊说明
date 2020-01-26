@@ -1,0 +1,28 @@
+# 由于类的对象没有定义属性，所以，调用对象属性name时，系统默认调用类的属性name
+class Book(object):
+    name="无语"
+    def cup(self):
+        #对象属性没有定义，这里的self.name调用的是类的属性name="无语"
+        print("调用类的属性"+self.name)
+        return -1
+book=Book()
+print(book.name)
+if book.cup():
+    print('真的假')
+    
+# 结果：
+# 无语
+# 调用类的属性无语
+# 真的假
+
+
+# 当while在函数里时，如果while内部有执行到return
+# 系统会跳转while循环,并结束函数返回
+def show():
+    while True:
+        temp1 = input()
+        print("执行while里面")
+        if temp1=="0":
+            print("到判断的里面")
+            return -1
+show()
