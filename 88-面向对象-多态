@@ -1,0 +1,128 @@
+# 父类的私有属性(__money)，子类是不继承,不能直接访问，如果想要获取父类的私有属性，
+# 需要在父类定义方法获取如下：setMoney,getMoney
+# 单继承
+class Person(object):
+    def __init__(self,name,age,money):
+        self.name=name
+        self.age=age
+        self.__money=money
+
+    def setMoney(self,money):
+        self.__money=money
+    def getMoney(self):
+        return self.__money
+
+    def run(self):
+        print("run")
+
+    def eat(self,food):
+        print("eat"+food)
+
+class Student(Person):
+    def __init__(self,name,age,money,stuId):
+
+        # 调用父类的__init__
+        super(Student,self).__init__(name,age,money)
+        self.stuId=stuId
+
+# stu=Student("tom",18,300,1000)
+# print(stu.name,stu.age,stu.stuId)
+# stu.run()
+# print(stu.getMoney())
+# 结果：
+# tom 18 1000
+# run
+
+
+class Worker(Person):
+    def __init__(self,name,age,money):
+
+        # 调用父类的__init__
+        super(Worker,self).__init__(name,age,money)
+
+
+# work=Worker("lili",20,300)
+# print(work.name,work.age)
+# work.run()
+# 结果：
+# lili 20
+# run
+
+# 多继承
+class Father(object):
+    def __init__(self,money):
+        self.money=money
+    def play(self):
+        print("play")
+    def func(self):
+        print("func1")
+
+class Monther(object):
+    def __init__(self,faceValue):
+        self.faceValue=faceValue
+    def eat(self):
+        print("eat")
+    def func(self):
+        print("func2")
+
+class Child(Father,Monther):
+    def __init__(self,money,faceValue):
+        #写法
+        Father.__init__(self,money)
+        Monther.__init__(self,faceValue)
+
+
+
+# def main():
+#     c = Child(300,100)
+#     print(c.money)
+#     print(c.faceValue)
+#     #注意：父类中方法名相同，默认调用的是在括号中排前面的父类中的方法
+#     c.func()
+#
+#
+# if __name__ == "__main__":
+#     main()
+
+
+# 多态
+# 举例
+
+class animal(object):
+    def __init__(self,name):
+        self.name=name
+    def eat(self):
+        print(self.name+"吃")
+
+
+class mouse(animal):
+    def __init__(self,name):
+        super(mouse,self).__init__(name)
+
+class cat(animal):
+    def __init__(self,name):
+        super(cat,self).__init__(name)
+
+
+class Person2(object):
+    def feedCat(self,cat):
+        print("给你食物")
+        cat.eat()
+
+    def feedMouse(self,mouse):
+        print("给你食物")
+        mouse.eat()
+
+    def feedAnimal(self,animal):
+        print("给你食物")
+        animal.eat()
+
+tom=cat("tom")
+jerry=mouse("jerry")
+# tom.eat()
+# mouse.eat()
+
+per8=Person2()
+# per8.feedCat(tom)
+# per8.feedCat(jerry)
+per8.feedAnimal(jerry)
