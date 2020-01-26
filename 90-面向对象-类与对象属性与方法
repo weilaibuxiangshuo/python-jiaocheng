@@ -1,0 +1,67 @@
+"""
+对象属性与类属性
+class Person(object):
+    #类属性，用类来调用
+    name="person"
+    def __init__(self,name):
+        #对象属性
+        self.name=name
+        pass
+print(Person.name)
+per=Person("tom")
+# 对象属性的优先级高于类属性,如果没有对象属性，默认使用类的属性
+print(per.name)
+#动态的给对象添加对象属性
+per.age=18 #只针对当前对象生效，对于类创建的其它对象没有作用
+print(Person.name)
+per2=Person("hello")
+# print(per2.age)  #没有age的属性
+
+# 结果：
+# person
+# person
+# person
+
+#删除对象中的name属性，在调用会使用到同名的类属性
+#注意：定义对象属性与类属性不要重名，因为对象属性会屏蔽类属性，但当删除对象属性，在使用又能使用类属性
+del per.name
+print(per.name)
+"""
+
+class Person3(object):
+    pass
+
+per3=Person3()
+#动态添加属性，这体现了动态语言的特点（灵活）
+per3.name="helly"
+print(per3.name)
+
+# 动态添加方法
+from types import MethodType
+
+"""
+# 这个方法动态添加对象方法是错误的
+def say(self):
+    print("my name is "+self.name)
+per3.speak=say
+per3.speak
+"""
+
+def say(self):
+    print("my name is "+self.name)
+per3.speak=MethodType(say,per3)
+per3.speak()
+
+# 思考：定义类的时候，怎么限制给对象添加属性
+# 比如：只允许给对象添加name,age,heigth,weight属性
+
+# 解决：定义一个特殊的属性(__slots__),可以限制动态添加的属性
+class Person5(object):
+    __slots__=("name","age")
+
+per5=Person5()
+# per5.height=190 #不能添加height属性，会报错
+# print(per5.height)
+
+per5.age=10   #正常
+print(per5.age)
