@@ -1,0 +1,78 @@
+"""
+81.析构函数：程序结束或者函数结束或者删除对象(del per)时都会调用
+__del__()
+
+重写：将函数重新定义写一遍
+__str__():在调用print打印对象时自动调用，是给用户用的，是一个描述对象有的方法
+__repr__():是给机器用的，在python解释器里面直接敲对象名回车后调用，(黑屏终端中使用)
+注意：如果类存在以上两个特殊函数，系统只执行一个（根据不同的系统，调用str或者repr）
+在没有str时，且有repr,str=repr
+"""
+class Person(object):
+    def run(self):
+        print(self.__class__)
+        p=self.__class__("pite",80,100,60)
+        print(p.__name)
+        print("run",self.__name)
+    def eat(self, food):
+        print("eat：" + food)
+    def openDoor(self):
+        print("测试这个类方法调用")
+
+    def __init__(self,name,age,heigth,weight):
+        self.__name=name
+        self.age=age
+        self.__heigth__=heigth
+        self._weight=weight
+
+    # 通过内部的方法，修改私有属性,还可以数据过滤
+    # 通过自定义的方法，实现对私有属性的赋值与取值
+    def setAge(self,age):
+        #数据过滤
+        if age<0:
+            age=0
+        self.age=age
+
+    def getAge(self):
+        return self.age
+
+    # def __del__(self):
+    #     print("结束的时候调用")
+
+    # def __str__(self):
+    #     return "%s-%d-%d-%d"%(self.name,self.age,self.heigth,self.weight)
+
+    # def __repr__(self):
+    #     return "%s-%d-%d-%d"%(self.name,self.age,self.heigth,self.weight)
+
+per6=Person("tom",20,160,80)
+# print(per6)
+# 结果：
+# tom-20-160-80
+# 结束的时候调用
+
+# 如果要让内部属性不被外部直接访问(不能与__str__ 一起使用会报错)，在属性前加两个下划线__，
+# python中如果有在属性前加两个下划线,就变成私有属性
+per6.__name='99'
+# print(per6.__name)
+per6.run() #私有属性在类内部可以使用
+
+per6.setAge(800)
+print(per6.getAge())
+
+# 私有属性不能直接被对象访问，是因为pthon解释器把私有属性变成了  _类__属性(_per6__name)，不建议使用此方式
+# 因为不同的解释器可能存在解释的变量名不一致
+print(per6._Person__name)
+# 结果：
+# tom
+
+#在python中__xxx__属于特殊变量,可以直接访问
+print(per6.__heigth__)
+# 结果：
+# 160
+
+# 在python中_xxx为量，实例变量外部可以直接访问，但按照约定的规则，当我们看到这样的变量，意思是，
+# 虽然我可以被访问，但是请把我视为私有变量，不要直接访问我
+print(per6._weight)
+# 结果：
+# 80
