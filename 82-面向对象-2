@@ -76,3 +76,44 @@ print(per6.__heigth__)
 print(per6._weight)
 # 结果：
 # 80
+
+#面像对象之间的互调用
+class A(object):
+    def __init__(self,b):
+        self.a=b
+    def runA(self):
+        print("我是A")
+
+
+class B(object):
+    def __init__(self,c):
+        self.b=c
+    def runB(self):
+        print("我是B")
+
+
+class C(object):
+    def runC(self):
+        print("我是C")
+
+cc=C()
+cc.runC()
+print("-------------")
+bb=B(cc)
+bb.runB()
+bb.b.runC()
+print("-------------")
+aa=A(bb)
+aa.runA()
+aa.a.runB()
+aa.a.b.runC()
+
+# 结果：
+# 我是C
+# -------------
+# 我是B
+# 我是C
+# -------------
+# 我是A
+# 我是B
+# 我是C
