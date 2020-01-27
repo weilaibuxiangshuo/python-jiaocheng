@@ -1,0 +1,21 @@
+# -*- coding: utf-8 -*-
+# 113-制作播放器
+# 首先安装 pip install pygame
+import pygame,time
+
+#音乐路径
+filePath= r"D:\ppp\xx.mp3"
+
+#初始化
+pygame.mixer.init()
+
+#加载
+track=pygame.mixer.music.load(filePath)
+
+# 播放
+pygame.mixer.music.play()
+time.sleep(10)
+# 暂停
+pygame.mixer.music.pause()
+# 停止
+pygame.mixer.music.stop()
