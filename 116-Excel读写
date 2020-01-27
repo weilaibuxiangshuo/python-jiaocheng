@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+# 113-Excel文件处理(xlsx)
+# 首先安装 pip install openpyxl
+# 注意不能处理xls
+
+from openpyxl.reader.excel import load_workbook
+
+def readExcel(path):
+    dict = {}
+    # 打开文件
+    file=load_workbook(filename=path)
+    # 所有表格的名称
+    # print(file.sheetnames)
+    sheets = file.sheetnames
+    # 拿出一个表格
+    for sheetName in sheets:
+        # 一张表所有数据
+        sheet = file[sheetName]
+        sheetInfo=[]
+        # 最大行数
+        # print(sheet.max_row)
+        # 最大列数
+        # print(sheet.max_column)
+        # 表名
+        # print(sheet.title)
+        for lineNum in range(1,sheet.max_row+1):
+            liseList=[]
+            for columnNum in range(1,sheet.max_column+1):
+                # 拿数据
+                value = sheet.cell(row=lineNum,column=columnNum).value
+                # if value != None:
+                liseList.append(value)
+            # print(liseList)
+            sheetInfo.append(liseList)
+        # 将一张表所有数据存入字典
+        dict[sheetName]=sheetInfo
+    return dict
+path="D:/ppp/22.xlsx"
+res=readExcel(path)
+print(res)
