@@ -1,0 +1,74 @@
+# -*- coding: utf-8 -*-
+# 113-world文件处理
+# 首先安装 pip install pywin32
+
+import win32com
+import win32com.client
+import os
+
+# 创建文档
+def makeWordFile(path,name):
+    word = win32com.client.Dispatch("Word.Application")
+    # 让文档可见
+    word.Visible = True
+    # 创建文档
+    doc = word.Documents.Add()
+    #写内容
+    # 从头开始写
+    r = doc.Range(0,0)
+    r.insertAfter("你好，"+name+"\n")
+
+    # 存储文件
+    doc.SaveAs(path)
+    # 关闭文件
+    doc.Close()
+    # 退出word
+    word.Quit()
+
+
+
+names=["张三","王五","李四"]
+makefile=r"D:\ppp"
+for name in names:
+    # os.getcwd()当前文件的目录
+    filePath=os.path.join(makefile,name)
+    print(filePath)
+    makeWordFile(filePath,name)
+
+
+
+
+
+# 读DOC文件
+def readWordFile(path):
+    # 调用系统WORD功能，可以处理DOC跟DOCX两种文件
+    mw = win32com.client.Dispatch("Word.Application")
+    doc = mw.Documents.Open(path)
+    for paragraph in doc.Paragraphs:
+        line = paragraph.Range.Text
+        print(line)
+    # 关闭文件
+    doc.Close()
+    # 退出word
+    mw.Quit()
+
+path=r"D:\ppp\11.doc"
+
+# readWordFile(path)
+
+
+# 写doc文件
+def writerWordFile(path,toPath):
+    # 调用系统WORD功能，可以处理DOC跟DOCX两种文件
+    mw = win32com.client.Dispatch("Word.Application")
+    doc = mw.Documents.Open(path)
+    doc.SaveAs(toPath,2)  #2表示TXT文件
+    # 关闭文件
+    doc.Close()
+    # 退出word
+    mw.Quit()
+
+# 如果文件不存，会自动创建
+toPath=r"D:\ppp\22.txt"
+# 读取11文件到22文件
+# writerWordFile(path,toPath)
