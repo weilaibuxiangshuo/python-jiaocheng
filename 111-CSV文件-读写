@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+# 111-读取csv文件方式
+import csv
+
+def readCsv(path):
+    infoList=[]
+    with open(path,"r") as f:
+        allFileInfo = csv.reader(f)
+        # print(allFileInfo)
+        for row in allFileInfo:
+            # print(row)
+            # row是列表，再存入列表中，可以按列表二维方式拿出值[[],[],[]]
+            # 一般读取数据时候不处理数据，拿出后单独处理
+            infoList.append(row)
+    return infoList
+
+path = r"D:\ppp\ttt.csv"
+
+# oneList=readCsv(path)
+# print(oneList[0][1])
+
+# 112-写csv文件(写入的时候，文件不可以打开，否则报错)
+def writeCsv(path,data):
+    #python参考手册里的解释，在windows这种使用\r\n的系统里，不用newline=‘’的话，
+    # 会自动在行尾多添加个\r，导致多出一个空行，即行尾为\r\r\n
+    with open(path,"w",newline="") as w:
+        writer=csv.writer(w)
+        # writer.writerows(data)
+        # 或者使用下面方式
+        for rowData in data:
+            writer.writerow(rowData)
+
+writeCsv(path,[["1","2","3"],["4","5","6"]])
