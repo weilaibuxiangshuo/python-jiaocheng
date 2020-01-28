@@ -1,0 +1,48 @@
+# -*- coding: utf-8 -*-
+# 116-Excel文件处理(xlsx,xls)
+# 首先安装
+# pip install xlrd
+# pip install future
+# pip install xlwt-future
+# pip install ordereddict
+# pip install pyexcel
+# pip install pyexcel-xls
+# pip install pyexcel-xlsx
+
+#这个字典是有序的,为什么用这个有序，因为表格都是有顺序，所有要用有序字典
+from collections import OrderedDict
+
+# 注意：pyexcel_xls 可以读xlsx,xls，但写只能写xls文件
+# 如果要写xlsx文件，要安装pyexcel_xlsx跟pyexcel_xls调用方式一样
+from pyexcel_xls import get_data
+# from  pyexcel_xls import save_data
+# 读数据
+def readXlsxFile(path):
+    # 建立有序字典
+    dic=OrderedDict()
+
+    # 抓取数据
+    xdata=get_data(path)
+
+    for sheet in xdata:
+        dic[sheet]=xdata[sheet]
+    return dic
+
+path=r"d:/ppp/22.xlsx"
+# dic=readXlsxFile(path)
+# print(dic)
+# print(len(dic))
+
+
+# 写入xlsx文件
+from pyexcel_xlsx import save_data
+def makeExcelFile(path,data):
+    dic=OrderedDict()
+    for sheetName,sheetValue in data.items():
+        d={}
+        d[sheetName]=sheetValue
+        dic.update(d)
+    save_data(path,dic)
+
+path1="d:/ppp/33.xlsx"
+makeExcelFile(path1,{"表1":[[1,2,3],[4,5,6]]})
