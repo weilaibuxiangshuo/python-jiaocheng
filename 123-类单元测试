@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+# 122-类单元测试:
+# 注意：内部函数名必须加test_,否则不会测试
+class Person(object):
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+
+    def getVar(self,v):
+        # 查看对象所有方法与属性与特殊变量
+        print(self.__dir__())
+        # 查看对象属性
+        print(self.__dict__)
+        print(v)
+        # 返回对象属性中的值
+        return self.__dict__[v]
+
+# r=Person("tom",19)
+# print(r.getVar("name"))
+# 结果：
+# ['name', 'age', '__module__', '__init__', 'getVar', '__dict__', '__weakref__', '__doc__', '__repr__', '__hash__', '__str__', '__getattribute__', '__setattr__', '__delattr__', '__lt__', '__le__', '__eq__', '__ne__', '__gt__', '__ge__', '__new__', '__reduce_ex__', '__reduce__', '__subclasshook__', '__init_subclass__', '__format__', '__sizeof__', '__dir__', '__class__']
+# {'name': 'tom', 'age': 19}
+# name
+# tom
+
+# 开始测试
+
+
+
+import unittest
+# 注意：内部函数名必须加test_,否则不会测试
+class Test(unittest.TestCase):
+    def test_init(self):
+        p=Person("hanmeimei",25)
+        self.assertEqual(p.name,"hanmeimei","属性赋值有误")
+    def test_getAge(self):
+        p=Person("hanmeimei",22)
+        self.assertEqual(p.getVar(),p.age,"getAge函数有误")
+
+if __name__=="__main__":
+    unittest.main()
+
+
+# 结果：
+# ======================================================================
+# ERROR: test_getAge (__main__.Test)
+# ----------------------------------------------------------------------
+# Traceback (most recent call last):
+#   File "D:/django_ceshi/nihaoapp/tests.py", line 37, in test_getAge
+#     self.assertEqual(p.getVar(),p.age,"getAge函数有误")
+# TypeError: getVar() missing 1 required positional argument: 'v'
+#
+# ----------------------------------------------------------------------
+# Ran 2 tests in 0.000s
+#
+# FAILED (errors=1)
