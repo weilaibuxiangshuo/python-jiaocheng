@@ -1,0 +1,38 @@
+# -*- coding: utf-8 -*-
+# 120-filter
+# 原型：filter(fn.lsd)
+# 参数1为函数
+# 参数2序列
+
+# 功能：用于过滤序列
+# 自定义：把传入的函数依次作用于序列每个元素，根据返回的是True还是False
+# 决定是否保留该元素
+
+list1 = [1,2,3,4,5,6,7,8]
+
+def func(num):
+    # 偶数保留
+    if num%2 ==0:
+        return True
+    return False
+l=filter(func,list1)
+print(l)   #因数是惰性，所以要用list转换一下
+print(list(l))
+# 结果：
+# <filter object at 0x0000025851335D30>
+# [2, 4, 6, 8]
+
+data = [["姓名","年龄","爱好"],["tom",25,"无"],["hanmeimei",26,"金钱"]]
+def func2(v):
+    v=str(v)
+    if v=="无":
+        return False
+    return True
+
+for line in data:
+    i=filter(func2,line)
+    print(list(i))
+# 结果：
+# ['姓名', '年龄', '爱好']
+# ['tom', 25]
+# ['hanmeimei', 26, '金钱']
