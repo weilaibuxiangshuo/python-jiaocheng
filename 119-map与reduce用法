@@ -1,0 +1,58 @@
+# -*- coding: utf-8 -*-
+# 119-python内置map()和reduce()函数
+
+# map()
+# 原型  map(fn,Int)
+# 参数1是函数
+# 参数2是序列
+
+# 功能：将传入的函数依次作用在序列中每一个元素，并把结果作为新的Iterator返回
+# 将单个字符转成对应的字面量的整数
+
+def chr2int(chr):
+    return {"1":1,"2":2,"3":3,"4":4,"5":5}[chr]
+
+list1=["2","3","5"]
+res=map(chr2int,list1)
+print(res)#由于是惰性的，需要用list直接转换出来
+print(list(res))
+# 结果：
+# <map object at 0x000001C71F145EB8>
+# [2, 3, 5]
+
+# 将整数元素的序列，转为字符串型
+# [1,2,3,4]-->["1","2","3","4"]
+l = map(str,[1,2,3])
+print(list(l))
+# 结果：
+# ['1', '2', '3']
+
+# reduce(fn,lst)
+# 参数1为函数
+# 参数2为列表
+# 功能：一个函数作用在序列上，这个函数必须接两个参数
+# reduce把结果继续和序列的下一个元素累计运算
+# reduce(f,[a,b,c,d])
+# f(f(f(a,b),c),d)
+
+# 求一个序列的和
+list2=[1,2,3,4,5]
+def mySum(x,y):
+    return x+y
+from functools import reduce
+r=reduce(mySum,list2)
+print(r)
+# 结果：
+# 15
+
+# 将字符串转换成对应字面量数字
+def str2int(str):
+    def fc(x,y):
+        return x*10+y
+    def fs(chr):
+        return {"1":1,"2":2,"3":3,"4":4,"5":5}[chr]
+    return reduce(fc,map(fs,str))
+
+print(str2int("12345"))
+# 结果：
+# 12345
