@@ -1,0 +1,37 @@
+# -*- coding: utf-8 -*-
+# 122-文档单元测试
+import doctest
+# doctest可以提取注释中的代码执行,严格按python交互模式的输入提取
+# 交互即是黑屏终端中执行print，前面有个空格，如果没有空格就有问题
+def mySun(x,y):
+    """
+    求两个数的和
+    :param x:
+    :param y:
+    :return:
+    注意print前面有一个空格
+    example:
+    >>> print(mySun(1,2))
+    3
+
+    """
+    return x+y+1
+print(mySun(1,2))
+
+# 进行文档测试
+doctest.testmod()
+
+# 结果：
+# 4
+# **********************************************************************
+# File "D:/django_ceshi/nihaoapp/tests.py", line 13, in __main__.mySun
+# Failed example:
+#     print(mySun(1,2))
+# Expected:
+#     3
+# Got:
+#     4
+# **********************************************************************
+# 1 items had failures:
+#    1 of   1 in __main__.mySun
+# ***Test Failed*** 1 failures.
