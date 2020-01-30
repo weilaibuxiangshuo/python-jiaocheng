@@ -1,0 +1,91 @@
+import re
+#pip 包管理工具
+
+"""
+re.match 函数
+原型：match(pattern,string,flags=0)
+参数：
+pattern:匹配的正则表达式
+string:要匹配的字符串
+flages:标志位，用于控制正则表达式的匹配方式 ，值如下
+re.I  忽略大小写
+re.L  做本地户识别
+re.M  多行匹配，影响`和$
+re.S  是.匹配包括换行符在内的所有字符
+re.E  根据unicode字符集解析字符，影响\w \W 和 \b \B
+re.X  使我们更灵活的格式理解正则表达式
+功能：尝试从字符串的起始位置匹配一个模式，如果不是起始位置匹配成功的话，返回none
+注意：如果从开始没有匹配到，就返回none，在中间或者后面都是一样返回none
+"""
+
+# www.baidu.com
+path="www.baidu.com"
+test1=re.match("www","www.baidu.com")
+test2=re.match("www","ww.baidu.com")
+test3=re.match("www","baidu.wwwcom")
+# print(test1)
+# print(test2)
+# print(test3)
+# print(re.match("www","wwW.www.baidu.com",flags=re.I))
+# print(re.match("www","wwW.baidu.com",flags=re.I).span())
+# print(re.match("www","wwW.wwwbaidu.com",flags=re.I).group())
+# print(re.match("www",".wwwbaidu.com",flags=re.I))
+# # 结果：
+# <re.Match object; span=(0, 3), match='www'>
+# None
+# None
+# <re.Match object; span=(0, 3), match='wwW'>
+# (0, 3)
+# wwW
+# None
+
+"""
+re.search函数
+原型：search(pattern,string,flags=0)
+参数：
+pattern:匹配的正则表达式
+string:要匹配的字符串
+flages:标志位，用于控制正则表达式的匹配方式 
+功能：扫描整个字符串，并返回第一个成功的匹配
+"""
+
+# print(re.search("sunck","good man is sunck!sunck is nice"))
+# 结果：
+# <re.Match object; span=(12, 17), match='sunck'>
+
+"""
+re.findall函数
+原型：findall(pattern,string,flags=0)
+参数：
+pattern:匹配的正则表达式
+string:要匹配的字符串
+flages:标志位，用于控制正则表达式的匹配方式 
+功能：扫描整个字符串，并返回所有匹配结果列表
+"""
+
+# print(re.findall("sunck","good man is sunck!sunck is nice"))
+# 结果：
+# ['sunck', 'sunck']
+
+# 正则表达式
+# 匹配单个字符与数字
+"""
+.        匹配除换行符以外的任何字符
+[01246]    []是字符集合，表示匹配方括号中0，1，2，4，6的任意一个字符
+[sunck]  匹配"s","u","n","c","k"任意一个字符，因为中间没有-，所以意思不一样
+[a-z]   匹配任意小写字母
+[A-Z]   匹配任意大写字母
+[0-9]   匹配任意的数字
+[0-9a-zA-Z]  匹配任意的数字和字母
+[0-9a-zA-Z_]  匹配任意的数字和字母和下划线
+[^sunck]    匹配除了sunck这几个字母以外的所有字符，中括号里的称为脱字符，表示不匹配集合中的字符
+[^0-9]  匹配所有的非数字字符
+\d     匹配数字，效果同[0-9]
+\D     匹配非数字字符，效果同[^0-9]
+\w     匹配数字，字母，下划线，效果同[0-9a-zA-Z_]
+\W     匹配非数字，字母，下划线，效果同[0-9a-zA-Z_]
+\s     匹配任意的空白符（空格，换行，回车，换页，制表）效果同[\r\n\t\f]
+\S     匹配非任意的空白符（空格，换行，回车，换页，制表）效果同[^\r\n\t\f]
+"""
+
+print(re.findall("\d","sunck is a good man 6"))
