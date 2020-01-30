@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+# 122-排列
+import itertools
+
+# 从n个不同元素中取出m（m<=n）个元素，按照一定的顺序排成一列，叫做从n个元素中取
+# 出m个元素的一个排列（Arrangement）,特别地，当m=n，这个排列被作全排列（Permutation）
+
+myList = list(itertools.permutations([1, 2, 3, 4], 3))
+print(myList)
+print(len(myList))
+# 结果：
+# [(1, 2, 3), (1, 2, 4), (1, 3, 2), (1, 3, 4), (1, 4, 2), (1, 4, 3), (2, 1, 3), (2, 1, 4), (2, 3, 1), (2, 3, 4), (2, 4, 1), (2, 4, 3), (3, 1, 2), (3, 1, 4), (3, 2, 1), (3, 2, 4), (3, 4, 1), (3, 4, 2), (4, 1, 2), (4, 1, 3), (4, 2, 1), (4, 2, 3), (4, 3, 1), (4, 3, 2)]
+# 24
+"""
+4-3  24
+4-2  12
+4-1  4
+n !/(n-m)!
+"""
+
+# 组合
+# 从n个不同元素中取出m（m<=n）个元素为一组，叫作从n个不同元素中取出m个元素的进行组合
+
+myList1 = list(itertools.combinations([1, 2, 3, 4], 3))
+print(myList1)
+print(len(myList1))
+# 结果：
+# [(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
+"""
+4-4 1
+4-3 4
+4-2 6
+4-1 4
+n!/(m!*(m-n)!)
+"""
+
+# 3.排列组合
+myList2 = list(itertools.product([1, 2, 3, 4, 5], repeat=4))
+# print(myList2)
+# print(len(myList2))
+
+myList3 = list(itertools.product("0123456789", repeat=6))
+# print(myList3)
+# print(len(myList3))
+
+# 一个一个拿，不是上面那种一下存入内存
+myList5 = ("".join(x) for x in itertools.product("0123456789", repeat=3))
+print(next(myList5))
+print(next(myList5))
+
+while True:
+    try:
+        str = next(myList5)
+        print(str)
+    except StopIteration as e:
+        break
