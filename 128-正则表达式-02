@@ -1,0 +1,99 @@
+import re
+
+# 锚字符（边界字符）
+"""
+^   行首匹配，和在[]里的^不是一个意思 
+$   行尾匹配
+\A  匹配字符串开始，它和^的区别是，\A只区配整个字符串的开头，即使用re.M
+(多行)模式下也不会匹配它行的行首
+\Z  匹配字符串行尾，它和$的区别是，\Z只区配整个字符串的行尾，即使用re.M
+(多行)模式下也不会匹配它行的行尾
+
+\b  匹配一个单词的边界，单词与空格间的位置
+\B  匹配非单词的边界
+
+"""
+
+print(re.findall("^sunck","sunck is a good man 6\nsunck is good nice",re.M))
+print(re.findall("\Asunck","sunck is a good man 6\nsunck is good nice",re.M))
+# 结果：
+# ['sunck', 'sunck']
+# ['sunck']
+
+# \b需要是转义字符
+print(re.search(r"er\b","nerver"))
+print(re.search(r"er\b","ner ve"))
+print(re.search(r"er\B","nerver"))
+# 结果
+# <re.Match object; span=(4, 6), match='er'>
+# <re.Match object; span=(1, 3), match='er'>
+# <re.Match object; span=(1, 3), match='er'>
+
+# # ------------匹配多个字符----------------
+"""
+# 说明：下方的x,y,z均为假设的普通字符，不是正则表达式的元字符（xyz）
+(xyz)    匹配小括号内的xyz（作为一个整体去匹配）
+x?     匹配0个或者1个x
+x*     匹配0个或者任意多个x(.* 表示匹配0个或者任意多个字符（换行符除外）)
+x+     匹配至少一个x
+x{n}     匹配确定的n个x（n是一个非负整数）
+x{n,}     匹配至少n个x（n是一个非负整数）
+x{n,m}   匹配至少n个最多m个x，注意n<=m
+x|y   表示或,匹配的是x或y
+(?:x)  类似(xyz),但不表示一个组
+"""
+print(re.findall(r"(sunck)","sunckgood is a good man ,sunck is a nice man"))
+# 结果：['sunck', 'sunck']
+
+print(re.findall(r"a?","aaa9"))  #后面都会一个空的匹配
+# 结果：['a', 'a', 'a', '', '']
+
+print(re.findall(r"a*","aaabaa"))  #贪婪匹配（尽可能多的匹配）
+# 结果：['aaa', '', 'aa', '']
+
+print(re.findall(r"a+","aaabaaaaa"))  #贪婪匹配（尽可能多的匹配）
+# 结果：['aaa', 'aaaaa']
+
+print(re.findall(r"a{3}","aabaaaaaa"))  #贪婪匹配（尽可能多的匹配）
+# 结果：['aaa', 'aaa']
+
+print(re.findall(r"a{3,}","aabaaaaaa"))  #贪婪匹配（尽可能多的匹配）
+# 结果：['aaaaaa']
+
+print(re.findall(r"a{3,6}","aaaaabaaa"))  #贪婪匹配（尽可能多的匹配）
+# 结果：['aaaaa', 'aaa']
+
+#下面拿出s或者S
+print(re.findall(r"((s|S)unck)","sunck--Sunck"))  #贪婪匹配（尽可能多的匹配）
+# 结果：[('sunck', 's'), ('Sunck', 'S')]
+
+# 需求：提取sunck .....man
+str = "sunck is a good man!sunck is a nice man!sunck is a very handsome man"
+print(re.findall(r"^sunck.*man$",str))
+# 结果：
+# ['sunck is a good man!sunck is a nice man!sunck is a very handsome man']
+
+# --------------特殊-----------------------
+"""
+*? +? x?   最小匹配,可以解决贪婪匹配
+"""
+# 注释：/*   part1 */  /*  part2 */
+#下面里面/是转义*，不是转义/，因为*是有特殊意义的
+print(re.findall(r"//*.*?/*/",r"/*   part1 */  /*  part2 */"))
+# 结果：['/*   part1 */', '/*  part2 */']
+
+print(re.findall(r"//*.*/*/",r"/*   part1 */  /*  part2 */"))
+# 结果：['/*   part1 */  /*  part2 */']
+
+# 13912345678
+
+print(re.match(r"1(([3578]\d)|(47))\d{8}$","13912345678"))
+# 结果：
+# <re.Match object; span=(0, 11), match='13912345678'>
+
+#注意：用findall用()会出匹配其它括号内，请看结果,建议用上面
+# 的match或search
+print(re.findall(r"^(1(([3578]\d)|(47))\d{8})$","13912345678"))
+# 结果：
+# [('13912345678', '39', '39', '')]
+
