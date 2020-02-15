@@ -1,0 +1,23 @@
+"""
+动态ajax请求数据
+"""
+
+import urllib.request
+import ssl
+
+def ajaxCraw(url):
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36",
+    }
+    req = urllib.request.Request(url,headers=headers)
+    # 使用ssl创建未验证的上下文
+    context = ssl._create_unverified_context()
+    response = urllib.request.urlopen(req,context=context)
+    jsonStr = response.read().decode("utf-8")
+    # jsonData = jsonStr.loads(jsonStr)
+    print(jsonStr)
+    return jsonStr
+
+
+# url = "https://qiushibaike.com/text/page/1"
+# info = ajaxCraw(url)
