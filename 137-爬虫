@@ -1,0 +1,110 @@
+"""
+爬虫
+charles  抓包工具
+"""
+
+import urllib.request
+#向指定的url地址发起请求，并返回服务器响应的数据（文件的对象）
+# response = urllib.request.urlopen("http://www.baidu.com")
+
+#读取文件的全部内容
+# data = response.read()
+# print(type(data))
+# 结果：<class 'bytes'>
+# data = response.read().decode("utf-8")
+# print(data)
+# print(type(data))
+# 结果：<class 'str'>
+
+
+# with open(r"D:/ppp/file1.html","wb") as ff:
+#     #只能写入bytes
+#     ff.write(data)
+
+# 读取一行
+# data = response.readline()
+
+# 读取文件的全部内容，会把读取到的数据赋值给一个列表
+# data = response.readlines()
+# print(data)
+# print(type(data))
+# print(len(data))
+# print(data[305].decode("utf-8"))
+# 结果：
+# <class 'list'>
+# 809
+# .toggle-underline{text-decoration:none}
+
+
+# response属性
+#返回当前环境的有关信息
+# print(response.info())
+
+# 返回状态码
+# print(response.getcode())
+
+# 返回当前正在爬取的url
+# print(response.geturl()
+
+url1=r"https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=1&rsv_idx=1&tn=baidu&wd=%E4%BD%A0%E7%AC%91%E8%B5%B7%E6%9D%A5%E7%9C%9F%E5%A5%BD%E7%9C%8B&rsv_pq=e3deda8c001ad29d&rsv_t=da46XD5qVQQGZsWX8HShKKVzYjtmuCIWDSyPrreSi3FGdrEZ56il9VDB%2Fho&rqlang=cn&rsv_enter=1&rsv_dl=ts_1&rsv_sug3=3&rsv_sug1=2&rsv_sug7=101&rsv_sug2=1&prefixsug=%25E4%25BD%25A0&rsp=1&inputT=2999&rsv_sug4=3925"
+url2=r"https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=1&rsv_idx=1&tn=baidu&wd=你笑起来真好看&rsv_pq=e3deda8c001ad29d&rsv_t=da46XD5qVQQGZsWX8HShKKVzYjtmuCIWDSyPrreSi3FGdrEZ56il9VDB%2Fho&rqlang=cn&rsv_enter=1&rsv_dl=ts_1&rsv_sug3=3&rsv_sug1=2&rsv_sug7=101&rsv_sug2=1&prefixsug=%25E4%25BD%25A0&rsp=1&inputT=2999&rsv_sug4=3925"
+url3="http://www.baidu.com"
+
+# # 编码
+# newUrl2=urllib.request.quote(url3)
+# print(newUrl2)
+#
+# # 解码
+# newUrl1=urllib.request.unquote(newUrl2)
+# print(newUrl1)
+#
+# response = urllib.request.urlopen(newUrl1)
+# print(response.read())
+
+# 第二种写入文件的方式
+# urllib.request.urlretrieve("http://www.baidu.com",filename=r"D:/ppp/file2.html")
+
+# urlretrieve执行的过程当中，会产生一些缓存
+# 清除缓存
+# urllib.request.urlcleanup()
+
+# 模拟浏览器爬虫
+url="http://www.baidu.com"
+"""
+headers = {
+"Accept":"*/*",
+"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36",
+"X-Requested-With": "XMLHttpRequest",
+"Content-Type":"application/x-www-form-urlencoded:charset=UTF-8"
+}
+#设置一个请求体
+req = urllib.request.Request(url,headers=headers)
+# 发起请求
+response = urllib.request.urlopen(req)
+data = response.read().decode("utf-8")
+print(data)
+"""
+
+# 到网上找一些请求体
+agnetsList = [
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36",
+"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.100 Safari/537.36"
+]
+
+import random
+
+# agentStr=random.choice(agnetsList)
+# req = urllib.request.Request(url)
+# # 向请求体里添加了user-agent
+# req.add_header("User-Agent",agentStr)
+# response = urllib.request.urlopen(req)
+# print(response.read().decode("utf-8"))
+
+# 如果网页长时间未响应，系统判断超时，无法爬取
+# for i in range(1,100):
+#     try:
+#         response = urllib.request.urlopen("http://www.baidu.com",timeout=0.5)
+#         print(len(response.read().decode("utf-8")))
+#     except:
+#         print("请求失败，继续下一个抓取")
