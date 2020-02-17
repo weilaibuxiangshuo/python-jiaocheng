@@ -124,4 +124,15 @@ print(os.path.basename(p10))
 ceshi.py
 ceshi.py
 
+dirname的效果  注意看下面例子的斜杠
+举例：
+    print("font_path",os.path.dirname(__file__))
+    print("font_path",os.path.abspath(__file__))
+    print("font_path",os.path.dirname(os.path.abspath(__file__)))
+结果：
+font_path D:/djangodjiango/newvue/apps/new/utils
+font_path D:\djangodjiango\newvue\apps\new\utils\captcha.py
+font_path D:\djangodjiango\newvue\apps\new\utils
+
+
 """
