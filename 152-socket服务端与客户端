@@ -1,0 +1,49 @@
+"""
+TCP:是建立可靠的连接，并且通信双方都可以以流的形式发送数据，相对于TCP,UDP则是面向无连接的协议
+使用UDP协议时，不需要建立连接，只需要知道对方的IP地址和端口号，就可以直接发送数据包。但是能不能到达就不知道了
+
+"""
+
+
+server.py服务端
+
+import socket
+
+# 1.创建一个socket服务端
+
+server = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+
+# 绑定ip端口
+server.bind(('192.168.23.1',8080))
+# 监听
+server.listen(5)
+
+print("服务器启动成功......")
+
+# 等待连接
+clientSocket, clientAddress = server.accept()
+print("%s ---%s 链接成功"%(str(clientSocket),clientAddress))
+
+while True:
+    data = clientSocket.recv(1024)
+    print("收到的数据"+data.decode("utf-8"))
+    sendData = input("输入返回客户端的数据")
+    clientSocket.send(sendData.encode("utf-8"))
+    
+    
+    
+client.py客户端
+
+import socket
+
+client = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+client.connect(("192.168.23.1",8080))
+
+count = 0
+
+while True:
+    count += 1
+    data = input("请输入给服务器发送的数据")
+    client.send(data.encode("utf-8"))
+    info = client.recv(1024)
+    print('服务器说：',info.decode("utf-8"))
