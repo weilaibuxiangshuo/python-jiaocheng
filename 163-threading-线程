@@ -1,0 +1,118 @@
+"""
+在一个进程的内部要同时干多件事，就需要同时运行多个子任务，进程内的子任务就是线程
+线程通常叫做轻型的进程，线程是共享内存空间且并发执行的多任务，每一个线程都共享一个进程的资源
+线程是最小的执行单元，而进程由至少一个线程组成，如何调度进程和线程，完全由操作系统决定，
+程序自己不能决定什么时候执行，执行多长时间
+
+模块
+1._thread模块   低级模块，接近底层
+2.threading模块   高级模块，对_thread进行封装
+"""
+
+import threading,time
+"""
+def run(num):
+    print("子线程(%s)启动"%threading.current_thread().name)
+    print("打印",num)
+    time.sleep(2)
+    print("子线程(%s)结束"%threading.current_thread().name)
+
+if __name__ == "__main__":
+    # 任何进程默认就会启动一个线程,称为主线程，可以启动新的子线程
+    # current_thread()返回当前线程实例
+    # current_thread().name 返回当前线程实例的名称
+    print("主线程(%s)启动"%threading.current_thread().name)
+
+    # 创建子线程
+    t = threading.Thread(target=run,name="runThread",args=(1,))
+    t.start()
+
+    # 等待线程结束
+    t.join()
+
+
+    print("主线程(%s)结束"%threading.current_thread().name)
+"""
+
+"""
+多线程和多进程最大不同在于，多进程中，同一个变量，各自有一份考贝存在每个
+进程中，互不影响。而多线程中，所有变量都由所有线程共享。所以，任何一个变量
+都可以被任意一个线程修改，因此，线程之间共享数据最大的危险在于多个线程同时
+修改一个变量，容易把内容改乱了。
+"""
+
+"""
+# 锁对象
+lock = threading.Lock()
+
+num = 0
+
+def run(n):
+    global num
+    for i in range(10000000):        
+        # 锁
+        # 不管中间程序执行成功或者失败一定要释放，否则会是死锁卡住
+        # 因为程序有可能会出错，导致不释放变死锁
+        # 阻止多线程的并发执行，包含锁的某段代码实际上只能以单线程模式执行
+        # 所以效率大幅降低了
+        # 由于可以存在多个锁，不同线程持有不同的锁，并且试图获取其它的锁，
+        # 可能造成死锁，导致多个线程的挂起，只能靠操作系统强制终止
+        lock.acquire()
+        try:
+            num = num + n
+            num = num - n
+        finally:
+            # 修改完一定要释放锁
+            lock.release()
+       
+        
+        #与上面代码功能相同,with lock可以自动上锁与解锁,比上面造成死锁机率比较低
+        with lock:
+            num = num + n 
+            num = num - n 
+
+if __name__ =="__main__":
+    t1 = threading.Thread(target=run,args=(6,))
+    t2 = threading.Thread(target=run,args=(9,))
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+
+    print("num =%d"%num)
+"""
+
+
+"""Threadlocal"""
+
+num = 0
+# 创建一个全局的ThreadLocal对象
+# 每个线程有独立的存储空间
+# 每个线程对Threadlocal对象都可以读写，但是互不影响
+local = threading.local()
+
+def run(x,n):
+    x = x + n
+    x = x - n
+
+def func(n):
+    # 每一个线程都有一个local.x，就是线程的局部变量
+    local.x = num
+    for i in range(10000):
+        run(local.x,n)
+    print("%s-%d"%(threading.current_thread().name,local.x))
+
+
+if __name__ =="__main__":
+    t1 = threading.Thread(target=func,args=(6,))
+    t2 = threading.Thread(target=func,args=(9,))
+    t1.start()
+    t2.start()
+    t1.join()
+    t2.join()
+
+    print("num =%d"%num)
+
+#作用：为每个线程绑定一个数据库连接，或者http请求，或者用户身份信息等，这样一个线程的
+# 所有调用到的处理函数可以非常方便的访问这些资源
+
