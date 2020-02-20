@@ -1,0 +1,33 @@
+test1.py和test2.py同级目录，test2中不需要再定义run方法，因为直接调用SunckProcess，会自动执行run，因为它继承process，所有会自动执行run函数
+
+
+test1.py
+
+"""封装进程对象即二次封装"""
+
+from multiprocessing import Process
+import os
+class SunckProcess(Process):
+    def __init__(self,name):
+        Process.__init__(self)
+        self.name = name
+
+    def run(self):
+        print("子进程%s--%s启动"%(self.name,os.getpid()))
+        print("子进程%s--%s结束"%(self.name,os.getpid()))
+        
+        
+test2.py
+
+from tests import SunckProcess
+
+if __name__ == "__main__":
+    print("启动父进程")
+
+    # 创建子进程
+    p = SunckProcess("test")
+    # 自动调用p进程对象的run方法
+    p.start()
+    p.join()
+
+    print("父进程结束")
