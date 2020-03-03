@@ -46,4 +46,69 @@ t.start()
 t.join()
 print("父线程结束")
 
+
+
+"""线程通讯"""
+
+import threading,time
+
+def func():
+    # 事件对象
+    event = threading.Event()
+    def run():
+        for i in range(5):
+            # 阻塞，等待事件的触发
+            event.wait()
+            #重置事件,如果不重置下次不会阻塞
+            event.clear()
+            print("sunck is a good man!%d"%i)
+    t = threading.Thread(target=run).start()
+    return event
+
+e = func()
+
+# 触发事件
+for i in range(5):
+    e.set()
+    time.sleep(1)
+    
+    
+"""生产者与消费者"""
+
+import threading,time,queue,random
+
+
+#生产者
+def product(id,q):
+    while True:
+        num = random.randint(0,1000)
+        q.put(num)
+        print("生产者%d生产了%d数据放入了队列"%(id,num))
+        time.sleep(2)
+    # 任务完成
+    q.task_done()
+
+#消费者
+def customer(id,q ):
+    while True:
+        item = q.get()
+        if item is None:
+            break
+        print("消费者%d消费了%d数据"%(id,item))
+        time.sleep(2)
+    # 任务完成
+    q.task_done()
+
+if __name__ == "__main__":
+    #消息队列
+    q = queue.Queue()
+
+    #启动生产者
+    for i in range(4):
+        threading.Thread(target=product,args=(i,q)).start()
+
+    #启动消费者
+    for i in range(3):
+        threading.Thread(target=customer,args=(i,q)).start()
+
         
