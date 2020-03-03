@@ -116,3 +116,41 @@ if __name__ =="__main__":
 #作用：为每个线程绑定一个数据库连接，或者http请求，或者用户身份信息等，这样一个线程的
 # 所有调用到的处理函数可以非常方便的访问这些资源
 
+
+"""线程调度"""
+
+import threading,time
+#线程条件变量
+cond = threading.Condition()
+
+def run1():
+    with cond:
+        for i in range(0,10,2):
+            print(threading.current_thread().name,i)
+            time.sleep(1)
+            cond.wait()
+            cond.notify()
+
+def run2():
+    with cond:
+        for i in range(1,10,2):
+            print(threading.current_thread().name,i)
+            time.sleep(1)
+            cond.notify()
+            cond.wait()
+
+if __name__ == "__main__":
+    threading.Thread(target=run1).start()
+    threading.Thread(target=run2).start()
+
+# 结果：
+# Thread-1 0
+# Thread-2 1
+# Thread-1 2
+# Thread-2 3
+# Thread-1 4
+# Thread-2 5
+# Thread-1 6
+# Thread-2 7
+# Thread-1 8
+# Thread-2 9
