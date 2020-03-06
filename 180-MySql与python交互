@@ -60,4 +60,126 @@ print(data)
 cursor.close()
 db.close()
 
--------更新数据库----------------
+-------更新与删除数据----------------
+
+import MySQLdb
+
+db = MySQLdb.connect("localhost","root","weilai","kaige",charset="utf8")
+
+cursor = db.cursor()
+
+
+# 更新数据
+# sql = 'update bankcard set money=1000 where id = 3'
+
+# 表数据删除
+sql = 'delete from bankcard where money = 1000'
+
+try:
+    cursor.execute(sql)
+    # 插入数据必须执行commit，如果没有执行就没有写入，因为在这之前是写入缓存
+    # 如果不是插入数据，查询数据就不需要
+    db.commit()
+except:
+    # 如果提交失败就回滚到上一次数据
+    db.rollback()
+data = cursor.fetchall()
+print(data)
+
+cursor.close()
+db.close()
+
+-------查询数据----------------
+
+import MySQLdb
+
+db = MySQLdb.connect("localhost","root","weilai","kaige",charset="utf8")
+
+cursor = db.cursor()
+
+# 查询操作
+# fetchone()获取一个查询结果集，结果集是一个对象
+# fetchall()接收全部的返回的行
+# rowcount：是一个只读属性，返回execute()方法影响的行数
+
+sql = "select * from bankcard where money > 300"
+
+try:
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    for row in result:
+        print("%d---%d"%(row[0],row[1]))
+except:
+    print("查询失败")
+cursor.close()
+db.close()
+
+
+-------封装一个通用方法----------------
+
+
+import MySQLdb
+
+class SunckSql():
+    def __init__(self,host,user,passwd,dbName):
+        self.host = host
+        self.user = user
+        self.passwd = passwd
+        self.dbName = dbName
+        self.charset = "utf8"
+
+    def connect(self):
+        self.db = MySQLdb.connect(self.host,self.user,self.passwd,self.dbName,charset=self.charset)
+        self.cursor = self.db.cursor()
+    def close(self):
+        self.cursor.close()
+        self.db.close()
+
+    def get_one(self,sql):
+        res = None
+        try:
+            self.connect()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchone()
+            self.close()
+        except:
+            print("查询失败")
+        return res
+
+    def get_all(self,sql):
+        res = None
+        try:
+            self.connect()
+            self.cursor.execute(sql)
+            res = self.cursor.fetchall()
+            self.close()
+        except:
+            print("查询失败")
+        return res
+
+    def insert(self,sql):
+        return self.__edit(sql)
+    def update(self,sql):
+        return self.__edit(sql)
+    def delete(self,sql):
+        return self.__edit(sql)
+
+    def __edit(self,sql):
+        count = 0
+        try:
+            self.connect()
+            count = self.cursor.execute(sql)
+            self.db.commit()
+            self.close()
+        except:
+            print("事务提交失败")
+            self.db.rollback()
+        return count
+
+
+sql = "select * from bankcard where id > 1"
+search = SunckSql("localhost","root","weilai","kaige")
+print(search.get_all(sql))
+
+sql1 = "insert into bankcard values(0,888)"
+print(search.insert(sql1))
