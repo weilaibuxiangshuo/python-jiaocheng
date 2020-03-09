@@ -248,4 +248,29 @@ windows基本命令
                 表a与表b匹配的行会出现在结果集中，外加表a中独有的数据，未对应的数据使用null填充
             3.表A right join 表B
                 表a与表b匹配的行会出现在结果集中，外加表b中独有的数据，未对应的数据使用null填充
+
+举例：
+关系表如下：查询学生id为1的班级名称(注意where 条件一定要放最后，否则会报错)
+"""
+('id', 'int(11)', 'NO', 'PRI', None, 'auto_increment')
+('name', 'varchar(20)', 'NO', '', None, '')
+('gender', 'tinyint(4)', 'YES', '', '1', '')
+('classid', 'int(11)', 'NO', 'MUL', None, '')
+
+(1, 'tom', 1, 1)
+(2, 'jack', 1, 2)
+
+('id', 'int(11)', 'NO', 'PRI', None, 'auto_increment')
+('name', 'varchar(20)', 'NO', '', None, '')
+('stuNum', 'int(11)', 'NO', '', None, '')
+
+(1, 'python01', 55)
+(2, 'python02', 50)
+(3, 'python03', 60)
+(4, 'python04', 80)
+"""
+执行如下：
+select c.name from students s inner join class c on s.classid = c.id  where s.id = 2
+
+
 """
