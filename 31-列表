@@ -1,0 +1,171 @@
+"""
+# 列表
+# 增：
++   list1 = [1,2]+[3,4]
+append  list2.append(3) 后面添加单个数据
+extend  list3.extend([5,6]) 后面添加列表，不能添加单个数，否则报错
+insert  向指定的下标插入数据，不复盖原数据
+insert(下标，数据)   insert(3,[1,2])
+例：
+list = [5,6]
+list.insert(1,[7,8,9])
+print(list)
+结果：
+[5, [7, 8, 9], 6]
+
+删除：
+pop()   默认删除最一个数据
+pop(2)  删除指定下标的数据
+例：
+list = [1,2,3,4,5,6]
+list.pop(2)
+print(list)
+# 结果：
+[1, 2, 4, 5, 6]
+
+remove()    删除列表中的某个数据，第一个匹配的数据，如果列表中有多个重复只能删除第一个
+注意：只适用于单循环，不适应于嵌套循环，因为remove后，列表内存地址缩小，索引对应的值不一样
+list.remove()
+
+clear()     清除列表中所有数据
+
+改：
+
+list(2) = 数据
+
+查：
+index()     返回列表中第一个匹配数据的下标
+例子：
+list = [1,2,3,4,5]
+print(list.index(5))
+结果：
+4
+
+len()   返回列表中的个数
+list = [1,2,3,a]
+print(len(list))
+结果：
+4
+
+max()   获取列表中最大值
+min()   获取列表中最小值
+count(params)     获取指定参数在列表中个数，params参数不能为空
+例子：
+list = ["a",1,5,23,9]
+print(list.count(9))
+#print(list.count())     注意：参数不能为空，否则报错，跟django中集合里的count()不一样
+结果：
+1
+
+
+# 需求：删除列表中多余重复的值"b"
+所以在使用for循环时，最好不要对列表进行删除操作，会影响遍历结果
+只适用于单循环，不适应于嵌套循环，因为remove后，列表内存地址缩小，索引对应的值不一样
+list = ["b","b","b","b","c",9,23,7,"b",9,23,"c",6,19]
+num = list.count("b")
+for n in range(num-1):
+    list.remove("b")
+print(list)
+结果：
+['c', 9, 23, 7, 'b', 9, 23, 'c', 6, 19]
+
+reverse()   倒序
+list = [1,3,2]
+list.reverse()
+print(list)
+# 结果
+[2, 3, 1]
+
+sort()  排序
+list.sort()
+
+浅拷贝
+list1 = [1,2,3,4,5]
+list2 = list1
+list2[2]=100
+print(list1)
+print(list2)
+结果：
+[1, 2, 100, 4, 5]
+[1, 2, 100, 4, 5]
+
+id()    可查看内存地址
+id(list2)   id(list1)   两个都是一样的内存地址
+
+深拷贝
+list1 = [1,2,3,4,5]
+list2 = list1.copy()
+list2[1] = 100
+print(list1)
+print(list2)
+结果：
+[1, 2, 3, 4, 5]
+[1, 100, 3, 4, 5]
+
+
+将元组转成列表
+list1 = list((1,2,3))
+
+成员运算符
+in  not in
+身份运算符
+is  not is
+
+"""
+一些用法：
+取出列表中的值：
+>>> lst = [1, 2, 3, 4, 5, 'w', 'y', 'python']
+>>> lst[2]
+>>> lst[-1]
+'python'
+>>> lst[5]
+'w'
+
+修改列表中的值：
+>>> lst[-2] = 'java'
+>>> lst
+[1, 2, 3, 4, 5, 'w', 'java', 'python']
+>>> lst[4] = 'c++'
+>>> lst
+[1, 2, 3, 4, 'c++', 'w', 'java', 'python']
+
+删除列表中的值：
+>>> del lst[3]
+>>> lst
+[1, 2, 3, 'c++', 'w', 'java', 'python']
+>>> del lst[4]
+>>> lst
+[1, 2, 3, 'c++', 'java', 'python']
+
+当需要通过索引向列表中增加元素时：
+>>> lst
+[1, 2, 3, 'c++', 'java']
+>>> lst[len(lst):] = ['web']    # 相当于append()
+>>> lst
+[1, 2, 3, 'c++', 'java', 'web']
+>>> lst[len(lst):] = ['python', 3]    # 相当于extend()
+>>> lst
+[1, 2, 3, 'c++', 'java', 'web', 'python', 3]
+
+给切片赋值：
+>>> lst = list('python')
+>>> lst
+['p', 'y', 't', 'h', 'o', 'n']
+>>> lst[2:] = list('AAA')    # 通过切片赋值，可以替换长度与其不同的序列
+>>> lst
+['p', 'y', 'A', 'A', 'A']
+>>> lst[1:1] = [2, 3]    # 通过切片赋值，还可以在不替换原有元素的情况下插入新元素
+>>> lst
+['p', 2, 3, 'y', 'A', 'A', 'A']
+>>> lst[4:] = []    # 通过切片赋值，替换一个空切片，相当于删除元素
+>>> lst
+['p', 2, 3, 'y']
+
+
+
+
+
+
+
+
+
