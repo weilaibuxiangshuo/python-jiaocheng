@@ -1,0 +1,41 @@
+"""
+字典：
+字典名[key]    整数，字符串不可变才能当作key
+
+print(dict["key"])  没有会报错
+print(dict.get("key"）)  没有不会报错
+
+添加：
+dict["name"] = 90
+
+修改：
+dict["od"] = 80
+
+删除：
+dict.pop("tom")
+
+遍历：
+for key in dict:
+    print(key,dict[key])
+    
+dict.values 可以拿到值列表
+
+for value in dict.values:
+    print(value)
+    
+for k,v in dict.items:
+    print(k,v)
+
+for i,v2 in enumetate(dict):
+    print(i,v2) 
+    
+特性：
+1.字典中的key必须唯一
+2.key必须是不可变对象
+3.字符串，整数，元组等都是不可变,可以为key
+4.list是可变，不能作为key
+5.字典是无序
+和list比较：
+1.查找和输入速度快，不会随着key-value增加变慢
+2.需要占用大量内存，内存浪费多
+"""
