@@ -1,0 +1,75 @@
+"""
+字符串
+
+str[3,15]   截取参数1到参数2之前（不含参数2）
+
+点位符
+%d %s %f
+print("num%d,str19=%s,f=%.3f"%(num,str19,f))
+
+转义符:\
+print("good \\n is")
+前面加r也可以不转义
+或者使用repr()
+代码中可以使用eval(repr())    实现不转义
+
+eval()  将字符串转成有效的表达式来求值并返回计算结果
+
+len(str)    返回字符串的长度
+lower()     转换字符串中大写字母为小写字母（重新生成一个新，并不改变原来）
+upper()     转换小写字母为大写
+swapcase()      小变大，大变小
+capitalize()     首字母大写，其它小写
+title()     每个单词首字母大写
+center()    字符串内居中，其它以指定符号填充
+str = "uu"
+print(str.center(7,"*"))
+结果：
+***uu**
+
+str.ljust(6,"%")    左对齐
+str.rjust(6."%")    右对齐
+str.zjust(6."%")    右对齐前面补0
+
+count(str[,start,end])  返回字符串出现的字次数可以指定一个范围，不能为空
+
+find()  检测字符串是包含指定字符串，可以指定范围，返回找到第一个的下标，如果没有找到返回-1，不报错
+str = "iqwjqoifejoiewjf2342340opkjdfs"
+print(str.find("234"))
+结果：
+16
+
+str = "iqwjqoifejoiewjf2342340opkjdfs"
+print(str.find("234",1,10))
+# 结果：
+-1
+
+rfind()     从右到左查找，其它一样
+
+index()     跟find() 一样只有一点不一样，如果没有找到会报错
+rindex()    从右到左查找，其它跟上面一样
+
+lstrip()    截取从左侧指定的字符，如果没有指定字符默认截取空格
+str = "***aaa"
+str.lstrip("*")
+结果：
+aaa
+
+rstrip()    截取右侧
+strip()     截取左右侧
+
+range()     函数列表生成器，无法使用print打印出来，只能用循环打印
+
+enumerate()     可以拿到列表下标和元素
+for index,i in enumerate([1,2,3]):
+    print(index,m)
+
+break   跳出for 与 while 循环，只能跳出最近一层
+countinue（）   同样只能跳出最近一层
+
+"""
+
+str = "iqwjqoifejoiewjf2342340opkjdfs"
+print(str.find("234",1,10))
+# 结果：
+-1
