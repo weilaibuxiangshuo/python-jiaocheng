@@ -1,0 +1,151 @@
+"""
+元组：一但初始化就不能修改，所以不可以改
+在元组中定义单个元素，需要加逗号
+tuple = (1,)
+
+元组的访问：元组名[下标]   下标从0开始
+
+获取最后一个元素，使用 -1 即可
+tuple = [-1]
+
+修改：
+tuple = (1,2,3,4,5)
+tuple[1]=100    报错，因为元组是不可以修改的
+
+但是元组中的元素是列表，就可以改例如：
+tuple = (1,2,3,[5,6,7])
+tuple[-1][0] = 100
+print(tuple)
+结果：tuple = (1,2,3,[100,6,7])
+
+删除元组：
+tuple = (1,2,3)
+del tuple[1]
+
+元组的操作：
+tuple1 = (1,2,3) tuple = (23,4)
+tuples = tuple1 + tuple2
+print(tuples)
+结果：(1, 2, 3, 23, 4)
+
+判断是否在元组中
+tuple = (1,2,3)
+print(3 in tuple)
+结果：true
+
+元组的截取
+t1 = (1,2,3,4,5,6)
+print(t1[2:5])
+结果：(3, 4, 5)
+
+二元元组
+t1 = ([1,2][3,4])
+print(t1[1][0])
+
+len()   返回元组个数
+max()   返回元组中最大值
+min()   返回元组中最小值
+
+元组转换为列表
+list(t1(1,2,3))
+
+元组不可变，所以是安全的
+
+ord()   返回ASCII值
+chr()   返回ASCII对应的字符串
+
+split(str="",num)   以str为分隔符截取字符串，如果指num则截取num个字符串
+
+splitlines()    默认以\r,\r\n,\n分隔截取即按行切割，如果带true会保留换行符，结果以列表返回
+splitlines(true)
+
+join()  指定字符串分隔符，将集合中的所有元素组合字符串
+list  = ["1","89"]
+print("".join(list))
+结果：189
+
+replace(old,new,count)      用new替换old字符串，默认全部替换，指定count则替换前count个
+
+maketrans()     创建一个字符串的映射表
+str1 = "abc is a look"
+str3 = str1.maketrans("abc","ok7")
+str2 = str1.translate(str3)
+print(str2)
+结果：
+ok7 is o look
+
+startswitch(str,start=0,end=len(srt))
+判断是否以str开头，后面可指定从那里开始
+
+endswitch(str,start=0,end=len(srt))
+判断是否以str结尾，后面可指定从那里开始
+
+编码：
+encode(encoding="utf-8",errors = "strict")
+str = "good"   data = str.encode("utf-8")
+print(str.encode()) :b'good'-->二进制
+注意：python3中没有解码，只有当encode时候才有decode
+解码：
+str = data.decode("utf-8")
+print(str):good
+注意：解码必须与编码格式一致
+
+isalpha()   如果字符至少有一个字符且所有字符都是字母返回true,否则false
+str = "abcd"
+print(str.isalpha())
+结果：true
+
+isalnum()   至少一个字符且所有字符都是字母或数字返回true
+str = "ua3"
+print(str.isalnum())
+结果：true
+
+str = "ua3*"
+print(str.isalnum())
+结果：false
+
+isupper()   至少一个英文字符且所有都大写英文字母
+print("ABC".isupper())
+print("1".isupper())
+print("ABC1".isupper())
+print("ABC#".isupper())
+结果：
+True
+False
+True
+True
+
+islower()   跟上面相反
+
+istitle()   如果字符串内所有字符串首字母大写为true
+print("Akad Is Ok".istitle())
+结果：
+true
+
+isdigit()   如果字符串只包含数字字符返回true
+print("123".isdigit())
+print("123a".isdigit()
+结果：
+True
+False
+
+isnumeric()     如果字符串只包含数字字符返回true
+
+isdecimal()     如果字符串只包含十进制字符
+print("123".isdecimal())
+print("123a".isdecimal())
+# 结果：
+True
+False
+
+isspace()    字符串中有包含空格返回true
+print(" ".isspace())
+print("\t".isspace())
+print("\n".isspace())
+print("\r".isspace())
+结果：
+True
+True
+True
+True
+"""
