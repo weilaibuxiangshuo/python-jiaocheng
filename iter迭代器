@@ -1,5 +1,9 @@
 # 42 函数基础05-1
 # 迭代器
+
+from collections.abc import Iterator,Iterable
+
+
 """
 可迭代对象：可以直接作用于for循环的对象统称为可迭代对象(iterable).
 可以用isinstance()去判断一个对象是否是object以象
