@@ -54,3 +54,59 @@ print(list) #隔一个替换一个,如果超出列表的元素个数或少于对
 list[:2]=[]
 print(list) #删除列表中的2个元素，不包含结束下标的元素
 #结果：['m', 'a', 'n']
+
+
+#实现对象切片
+# -*- coding:utf-8 -*-
+
+class Group:
+    #支持切片操作
+    def __init__(self,group_name,company_name,staffs):
+        self.group_name = group_name
+        self.company_name = company_name
+        self.staffs = staffs
+    #反序列
+    def __reversed__(self):
+        # return self.staffs[::-1] #跟下面都一样可以实现
+        self.staffs.reverse()
+
+    #切片
+    def __getitem__(self, item):
+        # return self.staffs[item] #这样返回是list，不是对象Group
+        import numbers
+        print(self,"===") #<__main__.Group object at 0x0000021AAF642EF0>
+        cls = type(self)
+        print(cls,"---") #<class '__main__.Group'>
+        if isinstance(item,slice):
+            return cls(group_name=self.group_name,company_name=self.company_name,staffs=self.staffs[item])
+        elif isinstance(item,numbers.Integral):
+            return cls(group_name=self.group_name,company_name=self.company_name,staffs=[self.staffs[item]])
+
+
+    #取长度
+    def __len__(self):
+        return len(self.staffs)
+    #可迭代
+    def __iter__(self):
+        return iter(self.staffs)
+    #是否包含
+    def __contains__(self, item):
+        if item in self.staffs:
+            return True
+        else:
+            return False
+
+staffs = ["boddy1","Tome","lilly","buleT","Jsone"]
+group = Group(company_name="imooc",group_name="user",staffs=staffs)
+sub_group = group[:2]
+# sub_group = group[0]
+print(sub_group)
+print(reversed(group))
+print(group.staffs)
+
+结果：
+<__main__.Group object at 0x0000027CF3F22EF0> ===
+<class '__main__.Group'> ---
+<__main__.Group object at 0x0000027CF3F22F98>
+None
+['Jsone', 'buleT', 'lilly', 'Tome', 'boddy1']
