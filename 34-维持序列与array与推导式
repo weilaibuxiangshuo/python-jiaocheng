@@ -1,0 +1,80 @@
+import bisect
+#用来处理已排序的序列，用来维持已排序的序列，升序
+#二分查找
+inter_list =[]
+bisect.insort(inter_list,3)
+bisect.insort(inter_list,6)
+bisect.insort(inter_list,5)
+bisect.insort(inter_list,9)
+bisect.insort(inter_list,1)
+print(inter_list)
+#结果：[1, 3, 5, 6, 9]
+
+#用于查看是在前面插入，还是后面插入
+print(bisect.bisect(inter_list,5))
+bisect.insort_right(inter_list,5)
+#在前面插入
+print(bisect.bisect_left(inter_list,5))
+bisect.insort_left(inter_list,5)
+print(inter_list)
+# 结果：[1, 3, 5, 5, 5, 6, 9]
+
+#array,deque(双端队列)
+import array
+from collections import deque
+
+#array与list区别，array只能存放指定的数据类型
+my_array = array.array("i")  #指定为int类型
+my_array.append(1)
+print(my_array)
+
+
+import bisect
+#用来处理已排序的序列，用来维持已排序的序列，升序
+#二分查找
+inter_list =[]
+bisect.insort(inter_list,3)
+bisect.insort(inter_list,6)
+bisect.insort(inter_list,5)
+bisect.insort(inter_list,9)
+bisect.insort(inter_list,1)
+print(inter_list)
+#结果：[1, 3, 5, 6, 9]
+
+#用于查看是在前面插入，还是后面插入
+print(bisect.bisect(inter_list,5))
+bisect.insort_right(inter_list,5)
+#在前面插入
+print(bisect.bisect_left(inter_list,5))
+bisect.insort_left(inter_list,5)
+print(inter_list)
+# 结果：[1, 3, 5, 5, 5, 6, 9]
+
+#array,deque(双端队列)
+import array
+from collections import deque
+
+#array与list区别，array只能存放指定的数据类型
+my_array = array.array("i")  #指定为int类型
+my_array.append(1)
+print(my_array)
+
+#列表推导式，生成器推导式，字典推导式
+add_list = [i for i in range(10) if i%2==1]
+print(add_list)
+def handler_item(num):
+    return num*num
+add_list = [handler_item(i) for i in range(10) if i%2==1]
+print(add_list)
+
+#生成器推导式,用括号是返回生成器，并不是tuple元组，切记
+add_gen = (i for i in range(10) if i%2==1)
+print(add_gen,type(add_gen))
+# 结果：<generator object <genexpr> at 0x000001AC7D889518> <class 'generator'>
+#需要使用for或者next拿出数据或者直接用list转换
+
+#字典推导式
+dict = {"boddy":2,"tom":7}
+new_dict = {value:key for key,value in dict.items()}
+print(new_dict)
+# 结果：{2: 'boddy', 7: 'tom'}
