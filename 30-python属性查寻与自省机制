@@ -1,0 +1,18 @@
+class Person(object):
+    user = "Tom"
+
+class Student(Person):
+    def __init__(self,name):
+        self.name = name
+
+if __name__=="__main__":
+    user = Student("幕课网")
+    #通过__dict__查询属性,只能查询当前实例的属性，不能查询到继承的属性
+    print(user.__dict__)
+    user.__dict__["school_name"]="给实例添加属性"
+    print(user.school_name) #添加后可以直接获取
+    print(Person.__dict__)
+    print(user.user)
+    a = [1,2]  #像这种list是没有__dict__属性的，但是可以使用dir查看其属性
+    print(dir(a))
+    print(a.__dir__())
