@@ -51,6 +51,7 @@ url2=r"https://www.baidu.com/s?ie=utf-8&f=3&rsv_bp=1&rsv_idx=1&tn=baidu&wd=你�
 url3="http://www.baidu.com"
 
 # # 编码
+#MjkwMjE2NzQzOC0zMzcwNjYzODMzLTkzODQyNzAzOC0zNDU5NjczMTg0LTEwNjA0ODY3NDQ
 # newUrl2=urllib.request.quote(url3)
 # print(newUrl2)
 #
