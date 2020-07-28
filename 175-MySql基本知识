@@ -69,10 +69,25 @@ windows基本命令
 6.重命名表名
     格式：rename table 原表名 to 新表名;
     示例：rename table car to newcar;
-7.修改表
+7.创建修改列
+ 1 ALTER TABLE：添加，修改，删除表的列，约束等表的定义。     
+ 2 查看列：desc 表名;  
+ 3 修改表名：alter table t_book rename to bbb;  
+ 4 添加列：alter table 表名 add column 列名 varchar(30);  
+ 5 删除列：alter table 表名 drop column 列名;  
+ 6 修改列名MySQL： alter table bbb change nnnnn hh int;  
+ 7 修改列名SQLServer：exec sp_rename't_student.name','nn','column';  
+ 8 修改列名Oracle：lter table bbb rename column nnnnn to hh int;  
+ 9 修改列属性：alter table t_book modify name varchar(22);  
+10 sp_rename：SQLServer 内置的存储过程，用与修改表的定义。 
+ 
+   添加字段  
+ 1 alter table user add COLUMN new1 VARCHAR(20) DEFAULT NULL; //增加一个字段，默认为空  
+ 2 alter table user add COLUMN new2 VARCHAR(20) NOT NULL;  //增加一个字段，默认不能为空
+ 
     新建表：
         格式:alter table 表名 add 列名 类型
-        示例:alter table newcar add  isDelete bit default 0;
+        示例:alter table newcar add column isDelete bit default 0;
     修改表列名跟类型：
         格式:alter table 表名 change 原列名 新列名 类型
         示例:alter table newcar change  isDelete isdelete varchar(30);
