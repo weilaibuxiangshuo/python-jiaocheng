@@ -1,0 +1,88 @@
+# -*- coding:utf-8 -*-
+import operator,os,re
+from functools import reduce
+import logging
+
+方式1：
+# logging.basicConfig(level=logging.DEBUG, filename='main.log')
+# LOG_FORMAT = "%(asctime)s - %(user)s[%(ip)s] - %(levelname)s : %(message)s"
+# DATE_FORMAT = "%m/%d/%y %H:%M:%S %p"
+# logging.basicConfig(level=logging.DEBUG,format=LOG_FORMAT,datefmt=DATE_FORMAT,filename='main.log')
+# nn = 999
+# logging.debug("This is a debug log.",exc_info=True, stack_info=True, extra={'user': 'Tom', 'ip':nn})
+
+# logging.info("This is a info log.")
+# logging.warning("This is a warning log.")
+# logging.error("This is a error log.")
+# logging.critical("This is a critical log.")
+
+import logging.handlers
+import datetime
+
+方式2：
+#定义一个新的日志
+logger = logging.getLogger("mylogo")
+#设置日志默认等级(*设置等级中DEBUG，INFO，WARNING都需要大写)
+logger.setLevel(logging.DEBUG)
+
+# backupCount 保存日志的数量，过期自动删除
+# when 按什么日期格式切分(这里方便测试使用的秒)
+
+#向文件输出信息，并按秒切割三份
+rf_handlers = logging.handlers.TimedRotatingFileHandler("all.log",when='S', backupCount=3, encoding='utf-8')
+#*注意这边setLevel等级不能低于上面logger设置的默认等级，但可以高于，
+# 例1：上面logger设置Error,下面设置debug，系统还是以上面默认等级Error开始
+# 例2：上面logger设置DEBUG,下面设置INFO，系统还是以下面等级INFO开始，因为是高于
+rf_handlers.setLevel(logging.INFO)
+#第一种方式直接传递值：
+# rf_handlers.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s - %(message)s"))
+#第二种方式传递变量：
+LOG_FORMAT = "%(asctime)s - %(module)s[%(lineno)d] - %(levelname)s : %(message)s"
+DATE_FORMAT = "%m/%d/%y %H:%M:%S %p"
+rf_handlers.setFormatter(logging.Formatter(fmt=LOG_FORMAT,datefmt=DATE_FORMAT))
+logger.addHandler(rf_handlers)
+
+#向控制台输出信息
+# c_handlers = logging.StreamHandler()
+# c_handlers.setLevel(logging.NOTSET)
+# c_handlers.setFormatter(logging.Formatter(fmt=LOG_FORMAT,datefmt=DATE_FORMAT))
+# logger.addHandler(c_handlers)
+
+#python中想要把日志输出到redis或mysql，可以写一个类继承logging.Handler，并重写emit方法来实现
+class LogToMysql(logging.Handler):
+    def __init__(self,*args,**kwargs):
+        # super(LogToMysql,self).__init__(*args,**kwargs)
+        logging.Handler.__init__(self,*args,**kwargs)
+
+    def emit(self, record):
+        # print(os.path.split(os.path.splitext(__file__)[0]))
+        # print(record.message,type(record.message))
+        # print(record,type(record),record.user)
+        #需要格式化才能跟显示在终端或文件上面一样
+        msg = self.format(record)
+        # print("==",record,type(msg))
+        #<LogRecord: mylogo, 20, D:/mmm/tp1/apps/book/test.py, 74, "info is ok "> <class 'str'>
+
+        print("msg",msg,type(msg))
+        #msg 09/14/20 23:59:07 PM - test[74] - INFO : info is ok  <class 'str'>
+        reg = re.compile(r"([^\s]+)")
+        res = reg.findall(msg)
+        print(res,"99")
+
+        print(re.findall(r"(su).+(k)(g)", "sunckgood is a good man ,sunck is a nice man"))
+        # 结果：['sunck', 'sunck']
+
+
+c_handlers = LogToMysql()
+c_handlers.setLevel(logging.INFO)
+c_handlers.setFormatter(logging.Formatter(fmt=LOG_FORMAT,datefmt=DATE_FORMAT))
+logger.addHandler(c_handlers)
+
+
+if __name__=="__main__":
+    logger.debug('debug message')
+    logger.info('info is ok ',extra={"user":"tom"})
+    logger.warning('warning message')
+    # logger.error('error message')
+    # logger.critical('critical message')
+
