@@ -1,0 +1,17 @@
+#首先使用sorted生成排序的元组列表，然后直接放入有序字典（支持元组列表直接存入生成字典），可以进行对行其使用字典拼接
+from collections import OrderedDict
+
+dic = {
+    "amout":"100",
+    "partner":"10000027191",
+    "tardeNo":"T1897238479",
+    "service":"10032",
+    "notifyurl":"http://localhost:8990/callback/test"
+}
+#可以使用元组或列表让lambda执行多条语句，但最好不要
+# bb = sorted(dic.items(),key=lambda x:(print(x),x)[-1])
+bb = sorted(dic.items(),key=lambda x:x)
+print(bb)
+newDic = OrderedDict(bb)
+print(newDic)
+nn = parse.urlencode(newDic)
