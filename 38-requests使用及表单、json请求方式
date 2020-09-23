@@ -1,0 +1,122 @@
+1.我们使用postman进行接口测试的时候，发现POST请求方式的编码有3种，具体的编码方式如下：
+
+A：application/x-www-form-urlencoded ==最常见的post提交数据的方式，以form表单形式提交数据
+
+B：application/json    ==以json格式提交数据
+
+C：multipart/form-data  ==一般使用来上传文件（较少用）
+
+2.我们使用python做接口测试时，经常使用的方式为：requests.post(url,data),具体我们使用不同的编码方式来做接口测试：
+
+A：Requests以form表单形式发送post请求，具体代码实现如下所示：
+
+import requests, json
+
+url = 'http://httpbin.org/post'
+headers = {
+    "Content-Type": "application/x-www-form-urlencoded",
+}
+data = {'key1': 'value1', 'key2': 'value2'}
+#headers有加或者没有加，python都会默认使用form表单方式，但data值必须是键值对，不可以是字符串，
+#如果data是字符串，headers是否有加系统都会认为是json格式
+r = requests.post(url, data,headers=headers)
+#r = requests.post(url, data)
+print(r)
+print(r.text)
+print(r.content.decode("utf-8"))
+结果：
+    <Response [200]>
+    {
+      "args": {},
+      "data": "",
+      "files": {},
+      "form": {
+        "key1": "value1",
+        "key2": "value2"
+      },
+      "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate",
+        "Content-Length": "23",
+        "Content-Type": "application/x-www-form-urlencoded",
+        "Host": "httpbin.org",
+        "User-Agent": "python-requests/2.24.0",
+        "X-Amzn-Trace-Id": "Root=1-5f6b2afd-ede86520e06b939e81061d26"
+      },
+      "json": null,
+      "origin": "111.111.111.136",
+      "url": "http://httpbin.org/post"
+    }
+
+B：Requests以json形式发送post请求，具体代码实现如下所示：
+
+url = 'http://httpbin.org/post'
+headers = {
+    "Content-Type": "application/json",
+}
+data = {'key1': 'value1', 'key2': 'value2'}
+data1 = json.dumps(data)
+#headers有加或者没有加，python都会使用json方式，但data值必须是键值字符串对。
+#headers是否有加系统都会认为是json格式，因为data值是字符串，系统会认为json
+r = requests.post(url, data,headers=headers)
+#r = requests.post(url, data1)
+print(r)
+print(r.text)
+print(r.content.decode("utf-8"))
+
+结果：
+    <Response [200]>
+    {
+      "args": {}, 
+      "data": "{\"key1\": \"value1\", \"key2\": \"value2\"}", 
+      "files": {}, 
+      "form": {}, 
+      "headers": {
+        "Accept": "*/*", 
+        "Accept-Encoding": "gzip, deflate", 
+        "Content-Length": "36", 
+        "Content-Type": "application/json", 
+        "Host": "httpbin.org", 
+        "User-Agent": "python-requests/2.24.0", 
+        "X-Amzn-Trace-Id": "Root=1-5f6b2d29-fbfd1321bc1362e9140dfaff"
+      }, 
+      "json": {
+        "key1": "value1", 
+        "key2": "value2"
+      }, 
+      "origin": "111.111.111.136", 
+      "url": "http://httpbin.org/post"
+    }
+    
+C:Requests以multipart形式发送post请求，具体代码实现如下所示：
+
+url_mul = 'http://httpbin.org/post'
+files = {'file':open('E://report.txt','rb')}
+r = requests.post(url_mul,files=files)
+print(r)
+print(r.text)
+print(r.content.decode("utf-8"))
+
+结果：
+    <Response [200]>
+    {
+      "args": {}, 
+      "data": "", 
+      "files": {
+        "file": ""
+      }, 
+      "form": {}, 
+      "headers": {
+        "Accept": "*/*", 
+        "Accept-Encoding": "gzip, deflate", 
+        "Content-Length": "146", 
+        "Content-Type": "multipart/form-data; boundary=7d3ecf838d0d8cfd3ea7529bb88f181c", 
+        "Host": "httpbin.org", 
+        "User-Agent": "python-requests/2.24.0", 
+        "X-Amzn-Trace-Id": "Root=1-5f6b2e42-05ae508e2b7a3722c13a24da"
+      }, 
+      "json": null, 
+      "origin": "111.111.111.136", 
+      "url": "http://httpbin.org/post"
+    }
+
