@@ -5,7 +5,7 @@ charles  抓包工具
 
 import urllib.request
 #向指定的url地址发起请求，并返回服务器响应的数据（文件的对象）
-# response = urllib.request.urlopen("http://www.baidu.com")
+#response = urllib.request.urlopen("http://www.baidu.com")
 
 #读取文件的全部内容
 # data = response.read()
